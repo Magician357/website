@@ -15,7 +15,7 @@ jobs:
       - name: Remove File
         uses: JesseTG/rm@v1.0.3
         with:
-          path: Magician357/website/venv
+          path: /Magician357/website/venv
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
