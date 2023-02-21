@@ -1,4 +1,4 @@
 # website
-My website/portfolio
+My website/portfolio, written using FastApi for python, and just vanilla JS, HTML, and CSS. 
 
-[![View on Repl.it](https://replit.com/badge/github/Magician357/website)](https://replit.com/new/github/Magician357/website)
+[View that here](https://magic-man.repl.co)
