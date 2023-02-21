@@ -13,6 +13,7 @@ import random
 app = FastAPI()
 
 async def getelseblank(path: str):
+    # Gets a file using asyncio
     try:
         contents = await asyncio.to_thread(pathlib.Path(path).read_text)
         return contents.replace('"', r'\"').replace("'", r"\'")
@@ -20,6 +21,7 @@ async def getelseblank(path: str):
         return ""
 
 async def renderhtml(filename: str, request: Request, customarg: str=""):
+    # Takes the filename, returns a string with the rendered html
     basecss=await getelseblank("html/base.css")
     css=await getelseblank("html/"+filename+".css")
     js=await getelseblank("html/"+filename+".js")
@@ -48,6 +50,7 @@ async def fakecode():
 
 @app.get("/fakecode", response_class=HTMLResponse)
 async def displaycode():
+  # Way to view the fake code
   with open("html/fakecode.txt","r") as f:
       text=f.read()
   return "<pre>"+text.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;")+"</pre>"
@@ -62,6 +65,7 @@ async def aboutme(request: Request):
 
 @app.get("/files")
 async def getfiles():
+  # Gets all files as list
   root=os.getcwd()
   current=[]
   for path, subdirs, files in os.walk(root):
@@ -78,6 +82,7 @@ async def sourcedisplay(request: Request):
 
 @app.get("/source/{absolutepath}")
 async def source(absolutepath):
+    # Simply shows whatever file is there
     path=os.path.relpath(absolutepath.replace("_","/"))
     return FileResponse("./"+path)
 
@@ -86,4 +91,4 @@ async def icon():
     return FileResponse("./html/icon/favicon.ico")
 
 if __name__ == "__main__":
-    uvicorn.run("main:app",host="0.0.0.0",port=5050,reload=True)
+    uvicorn.run("main:app",host="0.0.0.0",port=5050,)#reload=True
