@@ -6,14 +6,11 @@ import asyncio
 import os
 
 from htmlmin.main import minify
-#temp.body
 
 import uvicorn
 import random
 
 app = FastAPI()
-  
-#app.mount("/static", StaticFiles(directory="static"), name="static")
 
 async def getelseblank(path: str):
     try:
@@ -69,7 +66,7 @@ async def getfiles():
   current=[]
   for path, subdirs, files in os.walk(root):
       for name in files:
-          if "venv" in path or ".config" in path or "__pycache__" in path or ".cache" in path:
+          if "venv" in path or ".config" in path or "__pycache__" in path or ".cache" in path or ".git" in path or name in ["replit.nix",".replit","pyproject.toml","poetry.lock","store.json"]:
             continue
           print(os.path.join(path, name))
           current.append(os.path.join(path, name).replace("/","_"))
@@ -79,20 +76,14 @@ async def getfiles():
 async def sourcedisplay(request: Request):
     return await renderhtml('source',request,await getfiles())
 
-@app.get("/full/{absolutepath}", response_class=HTMLResponse)
+@app.get("/source/{absolutepath}")
 async def source(absolutepath):
     path=os.path.relpath(absolutepath.replace("_","/"))
-    with open(path,"r") as f:
-      text=f.read()
-    return "<pre><code>"+text.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;")+"</code></pre>"
-
-@app.get("/secret", response_class=HTMLResponse)
-async def secret(request: Request):
-  return await renderhtml('secret',request)
+    return FileResponse("./"+path)
 
 @app.get("/icon", include_in_schema=False)
 async def icon():
-  return FileResponse("./html/icon/favicon.ico")
+    return FileResponse("./html/icon/favicon.ico")
 
 if __name__ == "__main__":
-    uvicorn.run("main:app",host="0.0.0.0",port=random.randint(1000,9999),reload=True)
+    uvicorn.run("main:app",host="0.0.0.0",port=5050,reload=True)
