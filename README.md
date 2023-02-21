@@ -14,3 +14,5 @@ I doubt you would want to anyway, since it is probably not efficient.
 ---
 
 This website is still in development. Please do not judge.
+
+I may come back and add things later if needed.
