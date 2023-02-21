@@ -1,0 +1,8 @@
+#about {
+  display: inline;
+}
+
+p {
+  line-height: 32px;   /* within paragraph */
+  margin-bottom: -10px; /* between paragraphs */
+}

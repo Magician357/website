@@ -1,0 +1,127 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
+
+  body {
+    margin: 0px;
+  }
+  
+  #file {
+    font-family: 'Courier Prime', monospace;
+    color: green;
+    line-height: 20pt;
+  }
+
+  #codes {
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    overflow: hidden;
+    z-index:-999;
+    position: relative;
+    /*left: 165px;
+    filter: blur(2px);*/
+  }
+
+  .blurin {
+    animation: 250ms ease-out 0s 1 unblur forwards;
+  }
+
+  .blurout {
+    animation: 250ms ease-out 0s 1 reverse unblur forwards;
+  }
+
+  @keyframes unblur {
+    0% {filter: blur(100px);}
+    100% {filter: blur(2px);}
+  }
+</style>
+
+<div id="codes"><pre><p id="file"></p></pre></div>
+  
+<script>
+function loadFile(filePath) {
+  var result = null;
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("GET", filePath, false);
+  xmlhttp.send();
+  if (xmlhttp.status==200) {
+    result = xmlhttp.responseText;
+  }
+  return result;
+}
+  
+function delay(time) {
+  console.log(time);
+  return new Promise(resolve => setTimeout(resolve, time));
+}
+
+function ri(min, max) { // min and max included 
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+function render_text(full,maxlines) {
+  var lines = full.split("\n");
+  var numlines = lines.length;
+  while (numlines > maxlines) {
+    lines.shift();
+    numlines = lines.length;
+  }
+  return lines.join("\n");
+}
+  
+async function typed() {
+  var text = loadFile("fakecode.txt");
+  text=text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/,"&gt;");
+  text=text.split("");
+  var code = document.getElementById("file");
+  var i = 0;
+  var full = "";
+  var current;
+  var lines;
+  var numlines = 0;
+  var lineHeight = 30; // set this to the height of each line in pixels
+  var maxlines = Math.floor(window.innerHeight / lineHeight);
+  console.log(maxlines);
+
+  while (true) {
+    maxlines = Math.floor(window.innerHeight / lineHeight);
+    var addError = Math.random() < 0.2 && !/\s/.test(text[i]); // randomly add a wrong letter
+
+    if (addError) {
+      var continueTyping = Math.random() < 0.1;
+      var wrongLetter = String.fromCharCode(ri(32, 126)); // choose a random ASCII character
+      full += wrongLetter;
+      code.innerHTML = render_text(full+"☐",maxlines);
+      if (continueTyping) {
+        var cta = ri(1,10)
+        var n;
+        var curwrong = "";
+        var cn;
+        for (n=i;n<i+cta;n++) {
+          cn=n%text.length;
+          curwrong+=text[cn]
+          code.innerHTML = render_text(full+curwrong+"☐", maxlines);
+          await new Promise(resolve => setTimeout(resolve, ri(5, 20)));
+        }
+        for (n=i+cta;n>i;n--){
+          curwrong = curwrong.slice(0,-1);
+          code.innerHTML = render_text(full+curwrong+"☐", maxlines);
+          await new Promise(resolve => setTimeout(resolve, ri(50, 60)));
+        }
+        full = full.slice(0, -1); // remove the last character
+      } else {
+        await new Promise(resolve => setTimeout(resolve, ri(50, 100))); // wait for a short time before removing the wrong letter
+        full = full.slice(0, -1); // remove the last character
+        code.innerHTML = render_text(full+"☐",maxlines);
+      }
+    } else {
+      full += text[i];
+      i = (i + 1) % text.length;
+      code.innerHTML = render_text(full+"☐",maxlines);
+      await new Promise(resolve => setTimeout(resolve, ri(5, 20)));
+    }
+  }
+}
+
+typed();
+</script>

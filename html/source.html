@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block head %}<style>{{ css }}</style>{% endblock %}
+
+{% block main %}
+<ul>
+  {% for path in extra %}
+  <li><a class="intext" href="full/{{ path }}">.{{ path.replace("_","/") }}</a></li>
+  {% endfor %}
+</ul>
+
+{% endblock %}
+
+{% block js %}<script>{{ js }}</script>{% endblock %}

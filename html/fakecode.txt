@@ -1,0 +1,915 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ClassNamespace
+{
+    public class Class
+    {
+        static void Main(string[] args)
+        {
+            int[] nums = new int[] { 1, 2, 3, 4, 5 };
+            string[] names = new string[] { "John", "Sarah", "Emily", "Michael", "James" };
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    Console.WriteLine(names[i] + " is an even number.");
+                }
+                else
+                {
+                    Console.WriteLine(names[i] + " is an odd number.");
+                }
+            }
+
+            Console.ReadLine();
+
+            string[] words = new string[] { "Apple", "Banana", "Orange", "Mango", "Grape" };
+            int[] quantities = new int[] { 10, 20, 30, 40, 50 };
+
+            for (int i = 0; i < words.Length; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    Console.WriteLine(quantities[i] + " " + words[i] + "s");
+                }
+                else
+                {
+                    Console.WriteLine(quantities[i] + " " + words[i]);
+                }
+            }
+
+            Console.ReadLine();
+
+            int[] ages = new int[] { 18, 25, 30, 40, 50 };
+            string[] jobs = new string[] { "Student", "Engineer", "Doctor", "Teacher", "Lawyer" };
+
+            for (int i = 0; i < ages.Length; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    Console.WriteLine(jobs[i] + " is " + ages[i] + " years old.");
+                }
+                else
+                {
+                    Console.WriteLine(ages[i] + " years old " + jobs[i]);
+                }
+            }
+
+            Console.ReadLine();
+        }
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CalculationNamespace
+{
+    public class CalculationClass
+    {
+        static void Main(string[] args)
+        {
+            double[] numbers = new double[] { 3.5, 2.8, 6.1, 9.2, 1.6 };
+            string[] symbols = new string[] { "+", "-", "*", "/", "%" };
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                for (int j = 0; j < numbers.Length; j++)
+                {
+                    switch (j % 5)
+                    {
+                        case 0:
+                            Console.WriteLine(numbers[i] + " " + symbols[0] + " " + numbers[j] + " = " + (numbers[i] + numbers[j]));
+                            break;
+                        case 1:
+                            Console.WriteLine(numbers[i] + " " + symbols[1] + " " + numbers[j] + " = " + (numbers[i] - numbers[j]));
+                            break;
+                        case 2:
+                            Console.WriteLine(numbers[i] + " " + symbols[2] + " " + numbers[j] + " = " + (numbers[i] * numbers[j]));
+                            break;
+                        case 3:
+                            Console.WriteLine(numbers[i] + " " + symbols[3] + " " + numbers[j] + " = " + (numbers[i] / numbers[j]));
+                            break;
+                        case 4:
+                            Console.WriteLine(numbers[i] + " " + symbols[4] + " " + numbers[j] + " = " + (numbers[i] % numbers[j]));
+                            break;
+                        default:
+                            Console.WriteLine("Error");
+                            break;
+                    }
+                }
+            }
+
+            Console.ReadLine();
+        }
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ArrayNamespace
+{
+    public class ArrayClass
+    {
+        static void Main(string[] args)
+        {
+            int[] nums = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            string[] words = new string[] { "alpha", "beta", "gamma", "delta", "epsilon", "zeta", "eta", "theta", "iota", "kappa" };
+
+            int[] reversedNums = Reverse(nums);
+            string[] reversedWords = Reverse(words);
+
+            PrintArray(reversedNums);
+            PrintArray(reversedWords);
+
+            Console.ReadLine();
+        }
+
+        static int[] Reverse(int[] nums)
+        {
+            int[] reversedNums = new int[nums.Length];
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                reversedNums[nums.Length - 1 - i] = nums[i];
+            }
+
+            return reversedNums;
+        }
+
+        static string[] Reverse(string[] words)
+        {
+            string[] reversedWords = new string[words.Length];
+
+            for (int i = 0; i < words.Length; i++)
+            {
+                reversedWords[words.Length - 1 - i] = words[i];
+            }
+
+            return reversedWords;
+        }
+
+        static void PrintArray(int[] nums)
+        {
+            foreach (int num in nums)
+            {
+                Console.Write(num + " ");
+            }
+
+            Console.WriteLine();
+        }
+
+        static void PrintArray(string[] words)
+        {
+            foreach (string word in words)
+            {
+                Console.Write(word + " ");
+            }
+
+            Console.WriteLine();
+        }
+    }
+}
+
+public class X{
+private static final int y = 10;
+private static int[] arr = new int[y];
+public static void main(String[] args){
+    for(int i=0; i<arr.length; i++){
+        arr[i] = (int)(Math.random()*100);
+    }
+
+    System.out.println("Unsorted array: ");
+    for(int i=0; i<arr.length; i++){
+        System.out.print(arr[i] + " ");
+    }
+    System.out.println();
+
+    sort(arr);
+
+    System.out.println("Sorted array: ");
+    for(int i=0; i<arr.length; i++){
+        System.out.print(arr[i] + " ");
+    }
+    System.out.println();
+}
+
+private static void sort(int[] arr){
+    for(int i=0; i<arr.length-1; i++){
+        int min = i;
+        for(int j=i+1; j<arr.length; j++){
+            if(arr[j] < arr[min]){
+                min = j;
+            }
+        }
+        swap(arr, i, min);
+    }
+}
+
+private static void swap(int[] arr, int i, int j){
+    int temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+}
+}
+
+var x = 10;
+var y = 20;
+var a = [2, 3, 1, 4, 5, 0, 8, 9, 6, 7];
+var b = [];
+
+for (var i = 0; i < a.length; ++i) {
+  for (var j = 0; j < b.length; ++j) {
+    if (a[i] < b[j]) {
+      b.splice(j, 0, a[i]);
+      break;
+    }
+  }
+  if (j == b.length) {
+  b.push(a[i]);
+  }
+}
+
+console.log(b);
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+void sel_sort(int a[], int n) {
+  int i, j, m, t;
+  for (i = 0; i < n - 1; i++) {
+    m = i;
+    for (j = i + 1; j < n; j++) {
+      if (a[j] < a[m]) {
+        m = j;
+      }
+    }
+    t = a[i];
+    a[i] = a[m];
+    a[m] = t;
+  }
+}
+
+int main() {
+  int a[10];
+  int i;
+
+  srand(time(NULL));
+  for (i = 0; i < 10; i++) {
+    a[i] = rand() % 100;
+  }
+
+  printf("Unsorted: ");
+  for (i = 0; i < 10; i++) {
+    printf("%d ", a[i]);
+  }
+  printf("\n");
+
+  sel_sort(a, 10);
+
+  printf("Sorted: ");
+  for (i = 0; i < 10; i++) {
+    printf("%d ", a[i]);
+  }
+  printf("\n");
+
+  return 0;
+}
+
+var elems = document.getElementsByClassName("split");
+var n;
+for (n=0; n < elems.length; n++){
+    var cursplit = elems[n].innerHTML.split(" ");
+    var currenthtml = "";
+    var a;
+    for (a=0; a<cursplit.length; a++){
+        currenthtml+="<p class=\"splitted\">"+cursplit[a]+"&nbsp;</p>";
+    }
+    elems[n].innerHTML=currenthtml;
+}
+
+/* window.addEventListener('beforeunload', function(){
+    document.body.classList.add('is-exiting')
+}, false) */
+
+async function enter() {
+  var elem=document.getElementById("content");
+  elem.classList.add("is-entering");
+  elem.style.display = "block";
+  await new Promise((resolve, reject) => {
+    elem.addEventListener("animationend", resolve);
+    elem.addEventListener("animationerror", reject);
+    setTimeout(reject, 5000);
+  }).catch((err) => {
+    console.error(err);
+  });
+  elem.classList.remove("is-entering");
+}
+
+enter();
+
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime&family=Montserrat&family=Open+Sans:wght@300&family=Space+Mono&display=swap');
+
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0px;
+  background-color: black;
+  overflow: hidden;
+}
+
+h2, a {
+  font-family: "Courier New", courier, monospace;
+}
+
+a {
+  /*text-decoration: none;*/
+  color: white;
+  transition: color 250ms;
+}
+
+a:hover {
+  color: blue;
+}
+
+h1 {
+  font-family: 'Space Mono', monospace;
+}
+
+p {
+  font-family: 'Montserrat','Open Sans',sans-serif;
+}
+
+.splitted {
+  color: lightgrey;
+  transition: color 100ms;
+  display: inline-block;
+}
+
+.splitted:hover {
+  color: darkgrey;
+}
+
+#content {
+  margin-left: 160px; /* Same as the width of the sidebar */
+  padding: 0px 10px;
+  position: absolute;
+}
+
+.is-entering {
+  animation: slide-left 250ms cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+}
+
+.is-exiting {
+  animation: slide-left 250ms cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes slide-left {
+  0% {
+    opacity: 0%;
+    transform: translateX(200px);
+  }
+  100% {
+    opacity: 100%;
+    transform: translateX(0px);
+  }
+}
+
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+import asyncio
+
+from htmlmin.main import minify
+#temp.body
+
+import uvicorn
+import random
+
+app = FastAPI()
+  
+#app.mount("/static", StaticFiles(directory="static"), name="static")
+
+async def getelseblank(path: str):
+    try:
+        contents = await asyncio.to_thread(pathlib.Path(path).read_text)
+        return contents.replace('"', r'\"').replace("'", r"\'")
+    except:
+        return ""
+
+async def renderhtml(filename: str, request: Request, customarg: str=""):
+    basecss=await getelseblank("html/base.css")
+    css=await getelseblank("html/"+filename+".css")
+    js=await getelseblank("html/"+filename+".js")
+    response=templates.TemplateResponse(filename+".html", {"request": request,"css":css,"js":js,"basecss":basecss,"extra":customarg})
+    return response.body.decode()
+
+templates = Jinja2Templates(
+    directory="html",
+    comment_start_string='{=',
+    comment_end_string='=}',
+)
+
+@app.get("/", response_class=HTMLResponse)
+async def index(request: Request):
+    return await renderhtml("index",request)
+
+@app.get("/background", response_class=HTMLResponse)
+async def background(request: Request):
+    return await renderhtml("background",request)
+
+@app.get("/fakecode.txt", response_class=HTMLResponse)
+async def fakecode():
+    with open("html/fakecode.txt","r") as f:
+      text=f.read()
+    return text
+
+@app.get("/about", response_class=HTMLResponse)
+async def aboutme(request: Request):
+    return await renderhtml("aboutme",request)
+
+if __name__ == "__main__":
+    uvicorn.run("main:app",host="0.0.0.0",port=random.randint(1000,9999),reload=True)
+
+import asyncio
+import os
+import pathlib
+import random
+
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+
+app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+async def get_file_contents(path: str) -> str:
+    try:
+        contents = await asyncio.to_thread(pathlib.Path(path).read_text)
+        return contents.replace('"', r'\"').replace("'", r"\'")
+    except:
+        return ""
+
+@app.get("/", response_class=HTMLResponse)
+async def index(request: Request):
+    css = await get_file_contents("html/index.css")
+    js = await get_file_contents("html/index.js")
+    return app.templates.TemplateResponse("index.html", {"request": request, "css": css, "js": js})
+
+@app.get("/background", response_class=HTMLResponse)
+async def background(request: Request):
+    css = await get_file_contents("html/background.css")
+    js = await get_file_contents("html/background.js")
+    return app.templates.TemplateResponse("background.html", {"request": request, "css": css, "js": js})
+
+@app.get("/fakecode.txt", response_class=HTMLResponse)
+async def fakecode():
+    text = await get_file_contents("html/fakecode.txt")
+    return text
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", str(random.randint(1000, 9999))))
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True) 
+
+<style>
+  /* The sidebar menu */
+  #sidebar {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 160px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #111; /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+    border-right: solid white 2px;
+  }
+
+  #sidebar a {
+    font-size: 25px;
+    white-space: pre;
+  }
+</style>
+
+<script>/**
+ * fitty v2.3.6 - Snugly resizes text to fit its parent container
+ * Copyright (c) 2022 Rik Schennink <rik@pqina.nl> (https://pqina.nl/)
+ */
+</script>
+
+<div id="sidebar"data-links="/ /about" data-names="Home    ,About Me"></div>
+
+<script>
+  var sidebar=document.getElementById("sidebar")
+  var n;
+  var names = sidebar.getAttribute('data-names').split(",")
+  var links = sidebar.getAttribute('data-links').split(" ")
+  /* Remember to change below line if needed */
+  const cururl="https://Magic-Man-refactor.magic-man.repl.co"
+  for (n = 0; n < names.length; n++) {
+    sidebar.innerHTML+="<a href='javascript:waitchange(\""+cururl+links[n]+"\")'>"+names[n].replace(/ /g,"&nbsp;")+"</a></br>"
+    //sidebar.innerHTML+="<a href='"+links[n]+"'>"+names[n].replace(/ /g,"&nbsp;")+"</a></br>"
+  }
+  fitty("a");
+
+async function waitchange(url){
+  document.getElementById("codes").classList.add("blurout");
+  var elem=document.getElementById("content");
+  elem.classList.add("is-exiting");
+  await new Promise((resolve, reject) => {
+    elem.addEventListener("animationend", resolve);
+    elem.addEventListener("animationerror", reject);
+    setTimeout(reject, 5000);
+  }).catch((err) => {
+    console.error(err);
+  });
+  window.location.href=url;
+}
+
+</script>
+
+from random import choice
+import requests
+
+def compile_dict(cur_dict):
+  # Turns the dictionary model into a tuple for easier random choosing
+  curpos=()
+  for key in cur_dict:
+    addon=tuple(key for _ in range(cur_dict[key]))
+    curpos=curpos+addon
+  return tuple(curpos)
+
+class chain:
+  def __init__(self,corpus: tuple,state_size: int):
+    self.corpus,self.state_size=corpus,state_size
+    self.model=self.build_model(corpus,state_size)
+    
+  def build_model(self,corpus: tuple,state_size: int) -> dict:
+    print("building...")
+    # Takes the corpus and creates a model for it
+    cd={}
+    for text_in in corpus:
+      text=tuple("__BEGIN__" for _ in range(state_size))+text_in+("__END__",)
+      for i in range(len(text)-state_size):
+        state=tuple(text[i:i+state_size])
+        next=text[i+state_size]
+        if state not in cd:
+          cd[state]={}
+        if next not in cd[state]:
+          cd[state][next]=0
+        cd[state][next]+=1
+    return cd
+    
+  def get_possibilities(self,state):
+    # turn current state into a tuple with posibilities
+    return compile_dict(self.model[tuple(state)])
+
+  def gen_next(self,cur_text: list):
+    state=cur_text[len(cur_text)-self.state_size:len(cur_text)]
+    return choice(self.get_possibilities(state))
+
+  def generate_text(self,max_len=1000,min_len=0):
+    current=["__BEGIN__" for _ in range(self.state_size)]
+    for _ in range(max_len):
+      current.append(self.gen_next(current))
+      if current[-1] == "__END__":
+        if len(current) >= min_len:
+          return current
+        else:
+          current.pop()
+    return current
+
+
+def display_generation(generated,con=" "):
+  # Takes the generated list and turns it into a readable string
+  current=""
+  for word in generated:
+    if word in ("__BEGIN__", "__END__"):
+      continue
+    current+=word+con
+  return current
+
+def download_shakespeare():
+  f=open("texts/shakespeare.txt","w")
+  f.write(requests.get("https://www.gutenberg.org/files/1112/1112.txt").text)
+  f.close()
+
+def prebuild(corpus,lenght):
+  markov=chain(corpus,lenght)
+  f=open("prebuilt.py","w")
+  f.write(str(markov.model))
+  f.close()
+  
+
+def shakespeare_corpus():
+  with open("texts/shakespeare.txt","r") as f:
+    text=f.read()
+  parts=tuple(text.split("Scene"))
+  splitted=tuple(tuple(thing.split(" ")) for thing in parts)
+  return splitted
+
+def shakespeare_words_corpus():
+  with open("texts/shakespeare.txt","r") as f:
+    text=f.read()
+  parts=tuple(text.split("Scene"))
+  splitted=tuple(tuple([*thing]) for thing in parts)
+  print("corpus loaded")
+  return splitted
+
+def tf_corpus():
+  with open("texts/tf2.txt","r") as f:
+    text=f.read()
+  parts=tuple(text.split("Team Fortress 2 Update Released"))
+  splitted=tuple(tuple(thing.split(" ")) for thing in parts)
+  print(splitted[0])
+  return splitted
+
+def tf_words_corpus():
+  with open("texts/tf2.txt","r") as f:
+    text=f.read()
+  parts=tuple(text.split("Team Fortress 2 Update Released"))
+  splitted=tuple(tuple([*thing]) for thing in parts)
+  return splitted
+
+def hello_corpus():
+  with open("texts/hello.txt","r") as f:
+    text=f.read()
+  parts=tuple(text.split("Life goes"))
+  splitted=tuple(tuple([*thing]) for thing in parts)
+  return splitted
+
+def rc():
+  with open("texts/recipies.txt","r") as f:
+    text=f.read()
+  parts=tuple(text.split("--Recipie--"))
+  splitted=tuple(tuple([*(thing.lower())]) for thing in parts)
+  return splitted
+
+if __name__ == "__main__":
+  print("loading")
+  markov=chain(hello_corpus(),2)
+  print("generating...")
+  generated=markov.generate_text(max_len=10000,min_len=9000)
+  display=display_generation(generated,"")
+  print(display)
+  l=open("speach.txt","w")
+  l.write(display)
+  l.close()
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
+
+  body {
+    margin: 0px;
+  }
+  
+  #file {
+    font-family: 'Courier Prime', monospace;
+    color: green;
+    line-height: 20pt;
+  }
+
+  #codes {
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    overflow: hidden;
+    z-index:-999;
+    position: relative;
+    /*left: 165px;
+    filter: blur(2px);*/
+  }
+
+  .blurin {
+    animation: 250ms ease-out 0s 1 unblur forwards;
+  }
+
+  .blurout {
+    animation: 250ms ease-out 0s 1 reverse unblur forwards;
+  }
+
+  @keyframes unblur {
+    0% {filter: blur(100px);}
+    100% {filter: blur(2px);}
+  }
+</style>
+
+<div id="codes"><pre><p id="file"></p></pre></div>
+  
+<script>
+function loadFile(filePath) {
+  var result = null;
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("GET", filePath, false);
+  xmlhttp.send();
+  if (xmlhttp.status==200) {
+    result = xmlhttp.responseText;
+  }
+  return result;
+}
+  
+function delay(time) {
+  console.log(time);
+  return new Promise(resolve => setTimeout(resolve, time));
+}
+
+function ri(min, max) { // min and max included 
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+function render_text(full,maxlines) {
+  var lines = full.split("\n");
+  var numlines = lines.length;
+  while (numlines > maxlines) {
+    lines.shift();
+    numlines = lines.length;
+  }
+  return lines.join("\n");
+}
+  
+async function typed() {
+  var text = loadFile("fakecode.txt");
+  text=text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/,"&gt;");
+  text=text.split("");
+  var code = document.getElementById("file");
+  var i = 0;
+  var full = "";
+  var current;
+  var lines;
+  var numlines = 0;
+  var lineHeight = 30; // set this to the height of each line in pixels
+  var maxlines = Math.floor(window.innerHeight / lineHeight);
+  console.log(maxlines);
+
+  while (true) {
+    maxlines = Math.floor(window.innerHeight / lineHeight);
+    var addError = Math.random() < 0.2 && !/\s/.test(text[i]); // randomly add a wrong letter
+
+    if (addError) {
+      var continueTyping = Math.random() < 0.1;
+      var wrongLetter = String.fromCharCode(ri(32, 126)); // choose a random ASCII character
+      full += wrongLetter;
+      code.innerHTML = render_text(full+"☐",maxlines);
+      if (continueTyping) {
+        var cta = ri(1,10)
+        var n;
+        var curwrong = "";
+        var cn;
+        for (n=i;n<i+cta;n++) {
+          cn=n%text.length;
+          curwrong+=text[cn]
+          code.innerHTML = render_text(full+curwrong+"☐", maxlines);
+          await new Promise(resolve => setTimeout(resolve, ri(5, 20)));
+        }
+        for (n=i+cta;n>i;n--){
+          curwrong = curwrong.slice(0,-1);
+          code.innerHTML = render_text(full+curwrong+"☐", maxlines);
+          await new Promise(resolve => setTimeout(resolve, ri(50, 60)));
+        }
+        full = full.slice(0, -1); // remove the last character
+      } else {
+        await new Promise(resolve => setTimeout(resolve, ri(50, 100))); // wait for a short time before removing the wrong letter
+        full = full.slice(0, -1); // remove the last character
+        code.innerHTML = render_text(full+"☐",maxlines);
+      }
+    } else {
+      full += text[i];
+      i = (i + 1) % text.length;
+      code.innerHTML = render_text(full+"☐",maxlines);
+      await new Promise(resolve => setTimeout(resolve, ri(5, 20)));
+    }
+  }
+}
+
+typed();
+</script>
+
+# Solve the quadratic equation ax**2 + bx + c = 0
+
+# import complex math module
+import cmath
+
+a = 1
+b = 5
+c = 6
+
+# calculate the discriminant
+d = (b**2) - (4*a*c)
+
+# find two solutions
+sol1 = (-b-cmath.sqrt(d))/(2*a)
+sol2 = (-b+cmath.sqrt(d))/(2*a)
+
+print('The solution are {0} and {1}'.format(sol1,sol2))
+
+# Python program to find the factorial of a number provided by the user.
+
+# change the value for a different result
+num = 7
+
+# To take input from the user
+#num = int(input("Enter a number: "))
+
+factorial = 1
+
+# check if the number is negative, positive or zero
+if num < 0:
+   print("Sorry, factorial does not exist for negative numbers")
+elif num == 0:
+   print("The factorial of 0 is 1")
+else:
+   for i in range(1,num + 1):
+       factorial = factorial*i
+   print("The factorial of",num,"is",factorial)
+
+# Python program to find the factorial of a number provided by the user
+# using recursion
+
+def factorial(x):
+    """This is a recursive function
+    to find the factorial of an integer"""
+
+    if x == 1:
+        return 1
+    else:
+        # recursive call to the function
+        return (x * factorial(x-1))
+
+
+# change the value for a different result
+num = 7
+
+# to take input from the user
+# num = int(input("Enter a number: "))
+
+# call the factorial function
+result = factorial(num)
+print("The factorial of", num, "is", result)
+
+# Program to check if a number is prime or not
+
+num = 29
+
+# To take input from the user
+#num = int(input("Enter a number: "))
+
+# define a flag variable
+flag = False
+
+if num == 1:
+    print(num, "is not a prime number")
+elif num > 1:
+    # check for factors
+    for i in range(2, num):
+        if (num % i) == 0:
+            # if factor is found, set flag to True
+            flag = True
+            # break out of loop
+            break
+
+    # check if flag is True
+    if flag:
+        print(num, "is not a prime number")
+    else:
+        print(num, "is a prime number")
+
+num = 407
+
+# To take input from the user
+#num = int(input("Enter a number: "))
+
+if num == 1:
+    print(num, "is not a prime number")
+elif num > 1:
+   # check for factors
+   for i in range(2,num):
+       if (num % i) == 0:
+           print(num,"is not a prime number")
+           print(i,"times",num//i,"is",num)
+           break
+   else:
+       print(num,"is a prime number")
+       
+# if input number is less than
+# or equal to 1, it is not prime
+else:
+   print(num,"is not a prime number")

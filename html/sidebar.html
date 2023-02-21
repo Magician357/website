@@ -1,0 +1,70 @@
+<style>
+  /* The sidebar menu */
+  #sidebar {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 160px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #111; /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+    border-right: solid white 2px;
+  }
+
+  #sidebar .sidebarelement {
+    font-size: 25px;
+    white-space: pre;
+    transition: all 250ms;
+  }
+
+  #sidebar:hover > .sidebarelement{
+    color:darkgrey;
+  }
+
+  #sidebar:hover > .sidebarelement:hover {
+    color: #111033;
+    background-color: white;
+  }
+</style>
+
+<script>/**
+ * fitty v2.3.6 - Snugly resizes text to fit its parent container
+ * Copyright (c) 2022 Rik Schennink <rik@pqina.nl> (https://pqina.nl/)
+ */
+
+!function(e,t){"object"==typeof exports&&"undefined"!=typeof module?module.exports=t():"function"==typeof define&&define.amd?define(t):(e="undefined"!=typeof globalThis?globalThis:e||self).fitty=t()}(this,(function(){"use strict";return function(e){if(e){var t=function(e){return[].slice.call(e)},n=0,i=1,r=2,o=3,l=[],u=null,a="requestAnimationFrame"in e?function(){e.cancelAnimationFrame(u),u=e.requestAnimationFrame((function(){return f(l.filter((function(e){return e.dirty&&e.active})))}))}:function(){},c=function(e){return function(){l.forEach((function(t){return t.dirty=e})),a()}},f=function(e){e.filter((function(e){return!e.styleComputed})).forEach((function(e){e.styleComputed=m(e)})),e.filter(y).forEach(v);var t=e.filter(p);t.forEach(d),t.forEach((function(e){v(e),s(e)})),t.forEach(S)},s=function(e){return e.dirty=n},d=function(e){e.availableWidth=e.element.parentNode.clientWidth,e.currentWidth=e.element.scrollWidth,e.previousFontSize=e.currentFontSize,e.currentFontSize=Math.min(Math.max(e.minSize,e.availableWidth/e.currentWidth*e.previousFontSize),e.maxSize),e.whiteSpace=e.multiLine&&e.currentFontSize===e.minSize?"normal":"nowrap"},p=function(e){return e.dirty!==r||e.dirty===r&&e.element.parentNode.clientWidth!==e.availableWidth},m=function(t){var n=e.getComputedStyle(t.element,null);return t.currentFontSize=parseFloat(n.getPropertyValue("font-size")),t.display=n.getPropertyValue("display"),t.whiteSpace=n.getPropertyValue("white-space"),!0},y=function(e){var t=!1;return!e.preStyleTestCompleted&&(/inline-/.test(e.display)||(t=!0,e.display="inline-block"),"nowrap"!==e.whiteSpace&&(t=!0,e.whiteSpace="nowrap"),e.preStyleTestCompleted=!0,t)},v=function(e){e.element.style.whiteSpace=e.whiteSpace,e.element.style.display=e.display,e.element.style.fontSize=e.currentFontSize+"px"},S=function(e){e.element.dispatchEvent(new CustomEvent("fit",{detail:{oldValue:e.previousFontSize,newValue:e.currentFontSize,scaleFactor:e.currentFontSize/e.previousFontSize}}))},h=function(e,t){return function(){e.dirty=t,e.active&&a()}},b=function(e){return function(){l=l.filter((function(t){return t.element!==e.element})),e.observeMutations&&e.observer.disconnect(),e.element.style.whiteSpace=e.originalStyle.whiteSpace,e.element.style.display=e.originalStyle.display,e.element.style.fontSize=e.originalStyle.fontSize}},w=function(e){return function(){e.active||(e.active=!0,a())}},z=function(e){return function(){return e.active=!1}},F=function(e){e.observeMutations&&(e.observer=new MutationObserver(h(e,i)),e.observer.observe(e.element,e.observeMutations))},g={minSize:16,maxSize:512,multiLine:!0,observeMutations:"MutationObserver"in e&&{subtree:!0,childList:!0,characterData:!0}},W=null,E=function(){e.clearTimeout(W),W=e.setTimeout(c(r),C.observeWindowDelay)},M=["resize","orientationchange"];return Object.defineProperty(C,"observeWindow",{set:function(t){var n="".concat(t?"add":"remove","EventListener");M.forEach((function(t){e[n](t,E)}))}}),C.observeWindow=!0,C.observeWindowDelay=100,C.fitAll=c(o),C}function x(e,t){var n=Object.assign({},g,t),i=e.map((function(e){var t=Object.assign({},n,{element:e,active:!0});return function(e){e.originalStyle={whiteSpace:e.element.style.whiteSpace,display:e.element.style.display,fontSize:e.element.style.fontSize},F(e),e.newbie=!0,e.dirty=!0,l.push(e)}(t),{element:e,fit:h(t,o),unfreeze:w(t),freeze:z(t),unsubscribe:b(t)}}));return a(),i}function C(e){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};return"string"==typeof e?x(t(document.querySelectorAll(e)),n):x([e],n)[0]}}("undefined"==typeof window?null:window)}));
+</script>
+
+<div id="sidebar" data-links="/ /about /aboutthis" data-names="Home      ,About Me  ,About This,"></div>
+
+<script>
+  var sidebar=document.getElementById("sidebar")
+  var n;
+  var names = sidebar.getAttribute('data-names').split(",")
+  var links = sidebar.getAttribute('data-links').split(" ")
+  /* Remember to change below line if needed */
+  const cururl="https://Magic-Man.repl.co"
+  for (n = 0; n < names.length; n++) {
+    sidebar.innerHTML+="<a class=\"sidebarelement\"href='javascript:waitchange(\""+cururl+links[n]+"\")'>"+names[n].replace(/ /g,"&nbsp;")+"</a></br>"
+    //sidebar.innerHTML+="<a href='"+links[n]+"'>"+names[n].replace(/ /g,"&nbsp;")+"</a></br>"
+  }
+  sidebar.innerHTML+="<a class=\"sidebarelement\" href=\"https://replit.com/@Magic-Man\">Work&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></br>"
+  fitty("a");
+
+async function waitchange(url){
+  document.getElementById("codes").classList.add("blurout");
+  var elem=document.getElementById("content");
+  elem.classList.add("is-exiting");
+  await new Promise((resolve, reject) => {
+    elem.addEventListener("animationend", resolve);
+    elem.addEventListener("animationerror", reject);
+    setTimeout(reject, 5000);
+  }).catch((err) => {
+    console.error(err);
+  });
+  window.location.href=url;
+}
+
+</script>
