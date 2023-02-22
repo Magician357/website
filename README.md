@@ -7,6 +7,8 @@ My website/portfolio, written using FastApi for python, and just vanilla JS, HTM
 
 Feel free to take any part of this website for yourself, just please make sure to credit me.
 
+Also please message me or something if you want to use it.
+
 This is just a suggestion, however, and this website is under the [MIT license](https://opensource.org/license/mit/).
 
 I doubt you would want to anyway, since it is probably not efficient.

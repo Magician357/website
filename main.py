@@ -5,8 +5,6 @@ from fastapi.templating import Jinja2Templates
 import asyncio
 import os
 
-from htmlmin.main import minify
-
 import uvicorn
 import random
 
@@ -16,7 +14,7 @@ async def getelseblank(path: str):
     # Gets a file using asyncio
     try:
         contents = await asyncio.to_thread(pathlib.Path(path).read_text)
-        return contents.replace('"', r'\"').replace("'", r"\'")
+        return contents.replace('"', r'\"').replace("'", r"\'") # Just in case a string has invalid characters
     except:
         return ""
 
