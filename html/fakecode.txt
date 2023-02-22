@@ -913,3 +913,417 @@ elif num > 1:
 # or equal to 1, it is not prime
 else:
    print(num,"is not a prime number")
+
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from os import listdir
+from os.path import isfile, join
+
+from htmlmin.main import minify
+#temp.body
+
+import uvicorn
+import random
+
+app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+def renderhtml(filename, request: Request):
+    response=templates.TemplateResponse(filename, {"request": request})
+    return minify(response.body.decode())
+
+templates = Jinja2Templates(
+    directory="templates",
+    comment_start_string='{=',
+    comment_end_string='=}',
+)
+
+@app.get("/", response_class=HTMLResponse)
+async def index(request: Request):
+    return renderhtml("index.html",request)#templates.TemplateResponse("index.html", {"request": request})
+
+@app.get("/about", response_class=HTMLResponse)
+async def index(request: Request):
+    return renderhtml("aboutme.html",request)#templates.TemplateResponse("aboutme.html", {"request": request})
+
+@app.get("/source/templates/{path}", response_class=HTMLResponse)
+async def sourcecodeh(path: str, request: Request):
+    with open("templates/"+path,"r") as f:
+        text=f.read()
+
+    text=text.replace("&","&amp;")
+    text=text.replace("<","&lt;")
+    text=text.replace(">","&gt;")
+    
+    with open("templates/shb.html","r") as tem:
+        templat=tem.read()
+    if path=="jquery.js":
+        return minify(templat+"<pre><code class=\"language-javascript\">"+text+"""</code></pre>
+</body>
+</html>""")
+    return minify(templat+"<pre><code class=\"language-Jinja2\">"+text+"""</code></pre>
+</body>
+</html>""")
+
+@app.get("/source/templates/full/{path}", response_class=HTMLResponse)
+def sourcecodef(path: str, request: Request):
+    text=renderhtml(path,request)
+
+    text=text.replace("&","&amp;")
+    text=text.replace("<","&lt;")
+    text=text.replace(">","&gt;")
+    
+    with open("templates/shb.html","r") as tem:
+        templat=tem.read()
+
+    return templat+"<pre><code class=\"language-html\">"+text+"""</code></pre>
+</body>
+</html>"""
+
+@app.get("/source/templates/smallest/{path}", response_class=HTMLResponse)
+def sourecodes(path: str, request: Request):
+    code=sourcecodef(path,request)
+    code=code.replace(" ","")
+    text=code.replace("\n","")
+    #text=text.replace("&","&amp;")
+    #text=text.replace("<","&lt;")
+    #text=text.replace(">","&gt;")
+    
+    with open("templates/shb.html","r") as tem:
+        templat=tem.read()
+
+    return "<!DOCTYPE html><html><head><title>not working</title></head><body><pre><code>"+minify(text)+"""</code></pre>
+</body>
+</html>"""
+
+@app.get("/source/python/{path}", response_class=HTMLResponse)
+async def sourcecodep(path: str, request: Request):
+    with open(path, "r") as f:
+        text=f.read()
+    with open("templates/shb.html","r") as tem:
+        templat=tem.read()
+    return templat+"<pre><code class=\"language-Python\">"+text+"""</code></pre>
+</body>
+</html>"""
+
+@app.get("/source", response_class=HTMLResponse)
+def source(request: Request):
+    hfiles=[f for f in listdir("./templates") if isfile(join("./templates", f))]
+    #pfiles=[f for f in listdir("./") if isfile(join("./", f))]
+    
+    return minify(templates.TemplateResponse("source.html", {"request": request, "htmllinks": hfiles}).body.decode())
+
+
+uvicorn.run(app,host="0.0.0.0",port=str(random.randint(1000,9999)))
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <!--<link href="{{ url_for('static', path='/base.css') }}" rel="stylesheet">-->
+        <style>
+            :root {
+                color-scheme: dark; /* both supported */
+            }
+
+            @keyframes slide-left {
+              0% {
+                        transform: translateX(200px); opacity: 0%;
+              }
+              100% {
+                        transform: translateX(0px); opacity: 100%;
+              }
+            }
+            
+            #main {
+                animation-iteration-count: 1;
+                margin-left: calc(10% + 10px);
+                animation: slide-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+                width: 90%;
+                overflow: hidden;
+            }
+            /*@keyframes borderhover {
+                from {background-color: transparent;color: white;}
+                to {background-color: white;color: black;}
+            }*/
+
+            h1 {
+              font-family: 'Space Mono', monospace;
+              font-size: clamp(3rem, 10vw, 10rem);
+              padding: 0rem clamp(1rem, 2vw, 3rem);
+              border-radius: clamp(0.4rem, 0.75vw, 1rem);
+            }
+
+            h2 {
+                font-family: monospace;
+            }
+
+            h1, a {
+              color: white;
+              background-color: transparent;
+              transition: background-color 0.25s, color 0.25s;
+              whitespace: pre;
+            }
+            
+            h1:hover,a:hover {
+              background-color: white;
+              color: black;
+              transition: background-color 0.25s, color 0.25s;
+            }
+
+            .is-exiting {
+                animation: slide-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) 0s 1 reverse both;
+            }
+        </style>
+        {% block head %}{% endblock %}
+  </head>
+  <body>
+    <div id="alls">
+        {% include "sidebar.html" %}
+        <div id="main" class="main">
+            <h1 data-value="{% block title %}{% endblock %}‎ ">{{ self.title() }}‎ </h1>
+            {% block main %}{% endblock %}
+        </div>
+        <script>
+// Cool hacker effect for the title
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZqwertyuiopasdfghjklzxcvbnm ";
+
+let interval = null;
+
+document.querySelector("h1").onmouseover = event => {  
+  let iteration = 0;
+  
+  clearInterval(interval);
+  
+  interval = setInterval(() => {
+    event.target.innerText = event.target.innerText
+      .split("")
+      .map((letter, index) => {
+        if(index < iteration) {
+          return event.target.dataset.value[index];
+        }
+      
+        return letters[Math.floor(Math.random() * 26)]
+      })
+      .join("");
+    
+    if(iteration >= event.target.dataset.value.length){ 
+      clearInterval(interval);
+    }
+    
+    iteration += 1 / 4;
+    console.log(iteration);
+  }, 30);
+}
+</script>
+        <p class="is-exiting">bye</p>
+    </div>
+    <!--<script src="index.js"></script>-->
+  </body>
+</html>
+
+{% extends "base.html" %}
+
+{% block head %}
+<title>main</title>
+{% endblock %}
+
+{% block title %}Magic Man{% endblock %}
+
+{% block main %}
+<p>hello workd</p>
+<script>
+// Typing effect
+var TxtType = function(el, toRotate, period) {
+        this.toRotate = toRotate;
+        this.el = el;
+        this.loopNum = 0;
+        this.period = parseInt(period, 10) || 2000;
+        this.txt = '';
+        this.tick();
+        this.isDeleting = false;
+    };
+
+    TxtType.prototype.tick = function() {
+        var i = this.loopNum % this.toRotate.length;
+        var fullTxt = this.toRotate[i];
+
+        if (this.isDeleting) {
+        this.txt = fullTxt.substring(0, this.txt.length - 1);
+        } else {
+        this.txt = fullTxt.substring(0, this.txt.length + 1);
+        }
+
+        this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+
+        var that = this;
+        var delta = 200 - Math.random() * 100;
+
+        if (this.isDeleting) { delta /= 2; }
+
+        if (!this.isDeleting && this.txt === fullTxt) {
+        delta = this.period;
+        this.isDeleting = true;
+        } else if (this.isDeleting && this.txt === '') {
+        this.isDeleting = false;
+        this.loopNum++;
+        delta = 500;
+        }
+
+        setTimeout(function() {
+        that.tick();
+        }, delta);
+    };
+
+    window.onload = function() {
+        var elements = document.getElementsByClassName('typewrite');
+        for (var i=0; i<elements.length; i++) {
+            var toRotate = elements[i].getAttribute('data-type');
+            var period = elements[i].getAttribute('data-period');
+            if (toRotate) {
+              new TxtType(elements[i], JSON.parse(toRotate), period);
+            }
+        }
+        // INJECT CSS
+        var css = document.createElement("style");
+        css.type = "text/css";
+        css.innerHTML = ".typewrite > .wrap { border-right: 0.08em solid #fff}";
+        document.body.appendChild(css);
+    };
+</script>
+<h2 class="typewrite" data-period="2000" data-type='[ "Magic man", "This is my website", "Written with the normals", "javascript, html, and css", "but I also used python", "Python is my favorite language currently", "Use the sidebar to find out more" ]'></h2>
+{% endblock %}
+
+{% extends "base.html" %}
+
+{% block head %}
+<title>about me</title>
+<style>
+.collapsible {
+  background-color: #303030;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  border-radius: 3px 3px 0px 0px;
+  font-family: 'Montserrat';
+}
+
+.active, .collapsible:hover {
+  background-color: #404040;
+}
+
+.collapsible:after {
+  content: '\002B';
+  color: white;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";
+}
+
+.content {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  background-color: #212121;
+  border-radius: 0px 0px 3px 3px;
+}
+
+p {
+    font-family: 'Montserrat';
+    display: inline;
+    whitespace: pre;
+    transition: color 0.1s;
+}
+
+.splitted:hover {
+    color: black;
+}
+
+.highlightblue {
+    text-decoration: none;
+    background: transparent;
+    font-size: 16px;
+    
+}
+    
+.highlightblue:hover {
+    color: blue;
+    background: transparent;
+    
+}
+    
+</style>
+{% endblock %}
+
+{% block title %}About Me{% endblock %}
+
+{% block main %}
+<p class="split">(some of the text is clickable)</p>
+</br></br>
+<button class="collapsible">About this website</button>
+<div class="content">
+    </br><p class="split">This website is made using</p>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" class="highlightblue">html,&nbsp;</a>
+    <a href="https://www.w3.org/Style/CSS/Overview.en.html" class="highlightblue">css,&nbsp;</a>
+    <p class="splitted">and&nbsp;</p>
+    <a href="https://www.javascript.com/" class="highlightblue">javascript.&nbsp;</a></br></br>
+    <p class="split">It also uses</p><a href="https://www.python.org/" class="highlightblue">python&nbsp;</a><p class="split">in order to have the different pages.</p></br>
+</div>
+</br></br>
+<button class="collapsible">About me</button>
+<div class="content">
+    <p class="split">Currently, my favorite programming language is</p><a href="https://www.python.org/" class="highlightblue">python,&nbsp;</a><p class="split">but I will be trying different things soon.</p></br>
+    <p class="split">You can find some of the things I have done on</p> <a href="https://replit.com/@Magic-Man" class="highlightblue">replit,&nbsp;</a></br>
+</div>
+<!--
+https://developer.mozilla.org/en-US/docs/Web/HTML
+https://www.javascript.com/
+https://www.w3.org/Style/CSS/Overview.en.html
+-->
+
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight){
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + "px";
+    } 
+  });
+}
+
+var elems = document.getElementsByClassName("split");
+var n;
+for (n=0; n < elems.length; n++){
+    var cursplit = elems[n].innerHTML.split(" ");
+    var currenthtml = "";
+    var a;
+    for (a=0; a<cursplit.length; a++){
+        currenthtml+="<p class=\"splitted\">"+cursplit[a]+"&nbsp;</p>";
+    }
+    elems[n].innerHTML=currenthtml;
+}
+    
+</script>
+{% endblock %}
