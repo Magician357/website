@@ -63,7 +63,7 @@ namespace ClassNamespace
         }
     }
 }
-
+--!CODE!--
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -111,7 +111,7 @@ namespace CalculationNamespace
         }
     }
 }
-
+--!CODE!--
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -181,7 +181,7 @@ namespace ArrayNamespace
         }
     }
 }
-
+--!CODE!--
 public class X{
 private static final int y = 10;
 private static int[] arr = new int[y];
@@ -223,7 +223,7 @@ private static void swap(int[] arr, int i, int j){
     arr[j] = temp;
 }
 }
-
+--!CODE!--
 var x = 10;
 var y = 20;
 var a = [2, 3, 1, 4, 5, 0, 8, 9, 6, 7];
@@ -242,7 +242,7 @@ for (var i = 0; i < a.length; ++i) {
 }
 
 console.log(b);
-
+--!CODE!--
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -287,7 +287,7 @@ int main() {
 
   return 0;
 }
-
+--!CODE!--
 var elems = document.getElementsByClassName("split");
 var n;
 for (n=0; n < elems.length; n++){
@@ -319,7 +319,7 @@ async function enter() {
 }
 
 enter();
-
+--!CODE!--
 @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&family=Montserrat&family=Open+Sans:wght@300&family=Space+Mono&display=swap');
 
 
@@ -390,7 +390,7 @@ p {
     transform: translateX(0px);
   }
 }
-
+--!CODE!--
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -447,7 +447,7 @@ async def aboutme(request: Request):
 
 if __name__ == "__main__":
     uvicorn.run("main:app",host="0.0.0.0",port=random.randint(1000,9999),reload=True)
-
+--!CODE!--
 import asyncio
 import os
 import pathlib
@@ -488,7 +488,7 @@ async def fakecode():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", str(random.randint(1000, 9999))))
     uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True) 
-
+--!CODE!--
 <style>
   /* The sidebar menu */
   #sidebar {
@@ -546,7 +546,7 @@ async function waitchange(url){
 }
 
 </script>
-
+--!CODE!--
 from random import choice
 import requests
 
@@ -674,7 +674,7 @@ if __name__ == "__main__":
   l=open("speach.txt","w")
   l.write(display)
   l.close()
-
+--!CODE!--
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
 
@@ -802,7 +802,7 @@ async function typed() {
 
 typed();
 </script>
-
+--!CODE!--
 # Solve the quadratic equation ax**2 + bx + c = 0
 
 # import complex math module
@@ -820,7 +820,7 @@ sol1 = (-b-cmath.sqrt(d))/(2*a)
 sol2 = (-b+cmath.sqrt(d))/(2*a)
 
 print('The solution are {0} and {1}'.format(sol1,sol2))
-
+--!CODE!--
 # Python program to find the factorial of a number provided by the user.
 
 # change the value for a different result
@@ -864,7 +864,7 @@ num = 7
 # call the factorial function
 result = factorial(num)
 print("The factorial of", num, "is", result)
-
+--!CODE!--
 # Program to check if a number is prime or not
 
 num = 29
@@ -913,7 +913,7 @@ elif num > 1:
 # or equal to 1, it is not prime
 else:
    print(num,"is not a prime number")
-
+--!CODE!--
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -1018,7 +1018,7 @@ def source(request: Request):
 
 
 uvicorn.run(app,host="0.0.0.0",port=str(random.randint(1000,9999)))
-
+--!CODE!--
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -1199,7 +1199,7 @@ var TxtType = function(el, toRotate, period) {
 </script>
 <h2 class="typewrite" data-period="2000" data-type='[ "Magic man", "This is my website", "Written with the normals", "javascript, html, and css", "but I also used python", "Python is my favorite language currently", "Use the sidebar to find out more" ]'></h2>
 {% endblock %}
-
+--!CODE!--
 {% extends "base.html" %}
 
 {% block head %}

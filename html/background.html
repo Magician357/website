@@ -68,9 +68,29 @@ function render_text(full,maxlines) {
   }
   return lines.join("\n");
 }
+
+function shuffle(array) {
+  let currentIndex = array.length,  randomIndex;
+  while (currentIndex != 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
+}
+
+
+function get_text() {
+  const full = loadFile("fakecode.txt");
+  var array = full.split("--!CODE!--");
+  var text = shuffle(array);
+  return text.join(" ");
+}
   
 async function typed() {
-  var text = loadFile("fakecode.txt");
+  var text = get_text();
   text=text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/,"&gt;");
   text=text.split("");
   var code = document.getElementById("file");
