@@ -2,21 +2,23 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from fastapi.middleware.gzip import GZipMiddleware
 import asyncio
 import os
 
-from htmlmin.main import minify
+from minify_html import minify
 
 import uvicorn
 import random
 
 app = FastAPI()
+app.add_middleware(GZipMiddleware, minimum_size=10)
 
 async def getelseblank(path: str):
     # Gets a file using asyncio
     try:
         contents = await asyncio.to_thread(pathlib.Path(path).read_text)
-        return contents.replace('"', r'\"').replace("'", r"\'")
+        return contents.replace('"', r'\"').replace("'", r"\'") # Just in case a string has invalid characters
     except:
         return ""
 
@@ -26,7 +28,7 @@ async def renderhtml(filename: str, request: Request, customarg: str=""):
     css=await getelseblank("html/"+filename+".css")
     js=await getelseblank("html/"+filename+".js")
     response=templates.TemplateResponse(filename+".html", {"request": request,"css":css,"js":js,"basecss":basecss,"extra":customarg})
-    return response.body.decode()
+    return minify(response.body.decode(), minify_js = True, minify_css = True, remove_processing_instructions=True, keep_closing_tags=True)
 
 templates = Jinja2Templates(
     directory="html",
